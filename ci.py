@@ -165,23 +165,5 @@ def sign_macho(file: Path):
 if __name__ == "__main__":
     clean_unused()
 
-    machos = get_machos()
-    if not machos:
-        print("No machos found!")
-        sys.exit(1)
-    machos_to_sign = []
-    all_valid = True
-    for macho, magic in machos.items():
-        thin_macho(macho, magic)
-
-        valid, needs_signing = signing_sanity_checks(macho)
-        all_valid &= valid
-        if needs_signing:
-            machos_to_sign.append(macho)
-    if not all_valid:
-        sys.exit(1)
-
-    for macho in machos_to_sign:
-        sign_macho(macho)
 
     print("Done!")
